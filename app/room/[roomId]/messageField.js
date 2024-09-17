@@ -5,9 +5,10 @@ import { useState } from "react";
 
 export default function MessageField({ roomId }) {
     async function sendMessage() {
-        await axios.post("/api/sendMessage", { msg, roomId });
+        const res = await axios.post("/api/sendMessage", { msg, roomId });
+        console.log(res.data);
     }
-    
+
     const [msg, setMsg] = useState("");
 
     return (

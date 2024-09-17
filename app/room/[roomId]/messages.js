@@ -8,7 +8,6 @@ export default function Messages({ roomId, initialMessages }) {
     useEffect(() => {
         pusherClient.subscribe(roomId);
         pusherClient.bind("incoming-message", (message) => {
-            console.log(message);
             setIncomingMessages((prev) => [...prev, message]);
         });
 
