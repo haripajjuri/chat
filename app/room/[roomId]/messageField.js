@@ -7,6 +7,7 @@ export default function MessageField({ roomId }) {
     async function sendMessage() {
         await axios.post("/api/sendMessage", { msg, roomId });
     }
+    
     const [msg, setMsg] = useState("");
 
     return (

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import Messages from "./messages";
-import Pusher from "pusher";
+import MessageField from "./messageField";
 
 export default async function Room({ params }) {
     const prisma = new PrismaClient();
@@ -17,29 +17,15 @@ export default async function Room({ params }) {
         id: message.id,
     }));
 
-    async function sendMessage(formData) {
-        "use server";
-        const pusherServer = new Pusher({
-            appId: process.env.PUSHER_APP_ID,
-            key: process.env.PUSHER_KEY,
-            secret: process.env.PUSHER_SECRET,
-            cluster: process.env.PUSHER_CLUSTER,
-            useTLS: true,
-        });
-        pusherServer.trigger(
-            roomId,
-            "incoming-message",
-            formData.get("message")
-        );
-    }
     return (
         <div>
             <div>messages of this room:</div>
             <Messages roomId={roomId} initialMessages={serializedMessages} />
-            <form action={sendMessage}>
+            {/* <form action={() => sendMessage()}>
                 <input type="text" placeholder="enter message" name="message" />
                 <button type="submit">submit</button>
-            </form>
+            </form> */}
+            <MessageField roomId={roomId} />
         </div>
     );
 }
